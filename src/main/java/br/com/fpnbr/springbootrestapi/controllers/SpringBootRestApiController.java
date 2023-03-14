@@ -53,4 +53,21 @@ public class SpringBootRestApiController {
         usuarioRepository.deleteById(idUsuario);
         return new ResponseEntity<>("Usuário deletado com sucesso!", HttpStatus.OK);
     }
+
+    @GetMapping(value = "buscarUsuarioId")
+    @ResponseBody // Descrição da resposta
+    public ResponseEntity<Usuario> buscarUsuarioId(@RequestParam(name = "idUsuario") Long idUsuario) { // Recebe os dados para salvar
+        Usuario usuario = usuarioRepository.findById(idUsuario).get();
+        return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "atualizarUsuario")
+    @ResponseBody // Descrição da resposta
+    public ResponseEntity<?> atualizarUsuario(@RequestBody Usuario usuario) { // Recebe os dados para salvar
+        if(usuario.getId() == null) {
+            return new ResponseEntity<>("Informe um Id para atualizar o usuário!", HttpStatus.BAD_REQUEST);
+        }
+        Usuario usuarioSalvo = usuarioRepository.saveAndFlush(usuario);
+        return new ResponseEntity<>(usuarioSalvo, HttpStatus.OK);
+    }
 }
