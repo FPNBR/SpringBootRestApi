@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<h3>Crud Spring</h3>
+<h3>Tela de cadastro de Usuário</h3>
 
 <form action="" id="formCadastroUsuario">
     <div class="mb-3">
@@ -28,7 +28,8 @@
 
 </form>
 
-<button type="button" class="btn btn-primary" onclick="salvarUsuario()">Salvar</button>
+<button type="button" class="btn btn-success" onclick="salvarUsuario()">Salvar/Atualizar</button>
+<button type="button" class="btn btn-primary" onclick="document.getElementById('formCadastroUsuario').reset();">Novo</button>
 
 
 <script type="text/javascript">
@@ -37,7 +38,20 @@
         let nome = $("#nome").val();
         let idade = $("#idade").val();
 
+        $.ajax({
+            method: "POST",
+            url: "salvarUsuario",
+            data: JSON.stringify({id: id, nome: nome, idade: idade}),
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                $("#id").val(response.id);
+                alert("Usuário salvo com sucesso!")
+            }
+        }).fail(function (xhr, status, errorThrown){
+            alert("Erro ao salvar usuário: " + xhr.responseText);
+        })
     }
+
 </script>
 <!-- JQuery -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
