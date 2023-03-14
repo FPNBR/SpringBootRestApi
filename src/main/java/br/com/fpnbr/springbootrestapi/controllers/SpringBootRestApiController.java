@@ -39,4 +39,11 @@ public class SpringBootRestApiController {
 
         return new ResponseEntity<>(usuarioList, HttpStatus.OK); // Retorna a lista em JSON
     }
+
+    @PostMapping(value = "salvarUsuario")
+    @ResponseBody // Descrição da resposta
+    public ResponseEntity<Usuario> salvarUsuario(@RequestBody Usuario usuario) { // Recebe os dados para salvar
+        Usuario usuarioSalvo = usuarioRepository.save(usuario);
+        return new ResponseEntity<>(usuarioSalvo, HttpStatus.CREATED);
+    }
 }
