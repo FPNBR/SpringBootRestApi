@@ -46,4 +46,11 @@ public class SpringBootRestApiController {
         Usuario usuarioSalvo = usuarioRepository.save(usuario);
         return new ResponseEntity<>(usuarioSalvo, HttpStatus.CREATED);
     }
+
+    @DeleteMapping(value = "deletarUsuario")
+    @ResponseBody // Descrição da resposta
+    public ResponseEntity<String> deletarUsuario(@RequestParam Long idUsuario) { // Recebe os dados para salvar
+        usuarioRepository.deleteById(idUsuario);
+        return new ResponseEntity<>("Usuário deletado com sucesso!", HttpStatus.OK);
+    }
 }
