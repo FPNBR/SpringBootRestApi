@@ -54,7 +54,7 @@ public class SpringBootRestApiController {
         return new ResponseEntity<>("Usuário deletado com sucesso!", HttpStatus.OK);
     }
 
-    @GetMapping(value = "buscarUsuarioId")
+    @GetMapping(value = "buscarUsuarioPorId")
     @ResponseBody // Descrição da resposta
     public ResponseEntity<Usuario> buscarUsuarioId(@RequestParam(name = "idUsuario") Long idUsuario) { // Recebe os dados para salvar
         Usuario usuario = usuarioRepository.findById(idUsuario).get();
