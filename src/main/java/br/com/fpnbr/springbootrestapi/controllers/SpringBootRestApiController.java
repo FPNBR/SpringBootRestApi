@@ -61,6 +61,13 @@ public class SpringBootRestApiController {
         return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
     }
 
+    @GetMapping(value = "buscarUsuarioPorNome")
+    @ResponseBody // Descrição da resposta
+    public ResponseEntity<List<Usuario>> buscarUsuarioPorNome(@RequestParam(name = "nome") String nome) { // Recebe os dados para salvar
+        List<Usuario> usuarioList = usuarioRepository.buscarUsuarioPorNome(nome.trim().toUpperCase());
+        return new ResponseEntity<List<Usuario>>(usuarioList, HttpStatus.OK);
+    }
+
     @PutMapping(value = "atualizarUsuario")
     @ResponseBody // Descrição da resposta
     public ResponseEntity<?> atualizarUsuario(@RequestBody Usuario usuario) { // Recebe os dados para salvar
