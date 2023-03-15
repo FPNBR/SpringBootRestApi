@@ -10,10 +10,12 @@ O projeto consiste em uma API Rest onde foi desenvolvido um CRUD bem simples de 
 ![Web 2](https://github.com/FPNBR/SpringBootRestApi/blob/main/src/main/resources/images/2.jpg)
 
 # Tecnologias utilizadas
+
 ## Back end
 - Java
 - Spring Framework/Spring Data
 - Hibernate
+- Postgresql
 
 ## Front end
 - HTML / CSS / Bootstrap
