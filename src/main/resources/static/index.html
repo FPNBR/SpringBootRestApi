@@ -30,6 +30,7 @@
 <button type="button" class="btn btn-success" onclick="salvarUsuario()">Salvar/Atualizar</button>
 <button type="button" class="btn btn-primary" onclick="document.getElementById('formCadastroUsuario').reset()">Novo</button>
 <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalPesquisaUsuario">Pesquisar Usuário</button>
+<button type="button" class="btn btn-danger" onclick="deletarUsuarioTabela()">Deletar Usuário</button>
 
 <div class="modal fade" id="modalPesquisaUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -52,6 +53,7 @@
                         <th scope="col">ID</th>
                         <th scope="col">Nome</th>
                         <th scope="col">Editar</th>
+                        <th scope="col">Deletar</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -109,6 +111,29 @@
         });
     }
 
+    function deletarUsuarioPesquisa(idUsuario) {
+        if (confirm("Deseja realmente deletar o usuário?")) {
+            $.ajax({
+                method: "DELETE",
+                url: "deletarUsuario",
+                data: "idUsuario=" + idUsuario,
+                success: function (response) {
+                    $("#" + idUsuario).remove();
+                    alert(response);
+                }
+            }).fail(function (xhr, status, errorThrown) {
+                alert("Erro ao deletar usuário por id: " + xhr.responseText);
+            });
+        }
+    }
+
+    function deletarUsuarioTabela() {
+        let idUsuario = $("#id").val();
+        deletarUsuarioPesquisa(idUsuario);
+
+        document.getElementById('formCadastroUsuario').reset();
+    }
+
     function pesquisarUsuario() {
         let nome = $("#nomeBuscaUsuario").val();
 
@@ -122,7 +147,7 @@
                     $("#tabelaPesquisaUsuario > tbody > tr").remove();
 
                     for (let i = 0; i < response.length; i++) {
-                        $('#tabelaPesquisaUsuario > tbody').append('<tr><td>'+response[i].id+'</td><td>'+response[i].nome+'</td><td><button type=\"button\" class=\"btn btn-warning\" onclick="editarUsuarioPesquisa('+response[i].id+')">Editar</button>\n</td></tr>');
+                        $('#tabelaPesquisaUsuario > tbody').append('<tr id='+response[i].id+'><td>'+response[i].id+'</td><td>'+response[i].nome+'</td><td><button type=\"button\" class=\"btn btn-warning\" onclick="editarUsuarioPesquisa('+response[i].id+')">Editar</button></td><td><button type="button" class="btn btn-danger" onclick="deletarUsuarioPesquisa('+response[i].id+')">Deletar</button></td></tr>');
                     }
                 }
             }).fail(function (xhr, status, errorThrown){
